@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend/eks-deployment/mock_server
+        working-directory: frontend/mock_server
     steps:
       - name: clone repo
         uses: actions/checkout@v2
