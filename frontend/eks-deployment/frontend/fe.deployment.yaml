@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-deploy
+  labels:
+    name: frontend-deploy
+    app: bc58-app
+  namespace: bc58
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: frontend
+  template:
+    metadata:
+      name: fe-pod
+      labels:
+        name: frontend
+        app: bc58-app
+    spec:
+      containers:
+        - name: frontend-img
+          image: ghcr.io/divya-gariga/bc58-fe:latest
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: regcred
+        
