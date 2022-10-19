@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend/
+        working-directory: frontend/eks-deployment/mock_server
     steps:
       - name: clone repo
         uses: actions/checkout@v2
@@ -18,9 +18,9 @@ jobs:
           registry: ${{ secrets.REGISTRY }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      - name: build frontend
-        run: docker build -f ms.Dockerfile -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-mockdata:latest . 
-      - name: docker push frontend
+      - name: build mock-server
+        run: docker build -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-mockdata:latest .
+      - name: docker push mock-server
         run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-mockdata:latest
 
   build_frontend:
@@ -39,31 +39,9 @@ jobs:
           password: ${{ secrets.REGISTRY_TOKEN }}
       - name: npm build
         run: npm install --force && npm run build
-        env: 
-          BASE_URL : https://mockdata.bc58.tk/
+        env:
+          BASE_URL: https://mockdata.bc58.tk/
       - name: build frontend
-        run: docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-fe:latest 
+        run: docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-fe:latest
       - name: docker push frontend
         run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-fe:latest
-  
-  deploy:
-    needs: [build_mockserver,build_frontend]
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend/eks_deployment/
-    steps:
-      - name: clone repo
-        uses: actions/checkout@v2
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: connect to eks cluster
-        run: aws eks --region ${{ secrets.AWS_DEFAULT_REGION }} update-kubeconfig --name ${{ secrets.CLUSTER_NAME }}
-      - name: create app
-        run: bash deploy.sh
-      - name: verify installation
-        run: kubectl get all && kubectl get ingress
