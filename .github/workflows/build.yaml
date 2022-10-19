@@ -18,10 +18,11 @@ jobs:
           registry: ${{ secrets.REGISTRY }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      - name: build docker
+      - name: build mock-server
         run: docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-data:latest
-      # - name: docker push mysql
-      #   run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bootcamp-26-db:latest
+      - name: push mock-server
+        run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-data:latest
+      
         
       
 
