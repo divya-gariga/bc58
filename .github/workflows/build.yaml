@@ -22,6 +22,7 @@ jobs:
         run: docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-data:latest
       - name: push mock-server
         run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-data:latest
+  
   build_frontend:
     runs-on: ubuntu-latest
     defaults:
@@ -36,6 +37,11 @@ jobs:
           registry: ${{ secrets.REGISTRY }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
+      - name: install dependencies
+        run: |
+              npm install --force
+              npm install -g webpack
+              npm run build
       - name: build frontend
         run: docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-fe:latest
       - name: push frontend
