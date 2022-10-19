@@ -18,11 +18,11 @@ jobs:
           registry: ${{ secrets.REGISTRY }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      # - name: build docker images
-      #   run: docker build . -t ${{ secrets.REGISTRY}}/${{ secrets.REGISTRY_USERNAME}}/bc58-mockdata:latest
-      # - name: images
-      #   run: | 
-      #       docker images
+      - name: build docker images
+        run: docker build . -t ${{ secrets.REGISTRY}}/${{ secrets.REGISTRY_USERNAME}}/bc58-data
+      - name: images
+        run: | 
+            docker images
       
 
   
