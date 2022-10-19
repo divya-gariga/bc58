@@ -19,9 +19,6 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
       - name: build docker
-      #   run: docker build . -t ghcr.io/divya-gariga/bc58-data:latest
-      # - name: images
-      #   run: docker images
         run: docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-data:latest
       # - name: docker push mysql
       #   run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bootcamp-26-db:latest
