@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend/mock_server
+        working-directory: frontend/mock_server/
     steps:
       - name: clone repo
         uses: actions/checkout@v2
@@ -23,25 +23,4 @@ jobs:
       - name: docker push mock-server
         run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-mockdata:latest
 
-  build_frontend:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - name: clone repo
-        uses: actions/checkout@v2
-      - name: docker login to github container registry
-        uses: docker/login-action/@v2
-        with:
-          registry: ${{ secrets.REGISTRY }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_TOKEN }}
-      - name: npm build
-        run: npm install --force && npm run build
-        env:
-          BASE_URL: https://mockdata.bc58.tk/
-      - name: build frontend
-        run: docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-fe:latest
-      - name: docker push frontend
-        run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-fe:latest
+  
