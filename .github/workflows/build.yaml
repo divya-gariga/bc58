@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontent/eks-deployment/
+        working-directory: frontend/eks-deployment/
     steps:
       - name: clone repo
         uses: actions/checkout@v2
