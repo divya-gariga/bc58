@@ -22,7 +22,7 @@ spec:
         - name: frontend-img
           image: ghcr.io/divya-gariga/bc58-fe:latest
           ports:
-            - containerPort: 3000
+            - containerPort: 80
       imagePullSecrets:
         - name: regcred
         
