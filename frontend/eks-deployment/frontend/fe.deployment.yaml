@@ -26,7 +26,6 @@ spec:
           env: 
             - name: BASE_URL
               value: https://mockdata.bc58.tk/
-
       imagePullSecrets:
         - name: regcred
         
