@@ -23,9 +23,12 @@ spec:
           image: ghcr.io/divya-gariga/bc58-fe:latest
           ports:
             - containerPort: 80
-          env: 
+          env:
             - name: BASE_URL
               value: https://mockdata.bc58.tk/
+            - name: DOMAIN
+              value: dev-1vwfpixt2eolb3tc.us.auth0.com
+            - name: CLIENTID
+              value: vr4awDQ0hFhUFfSdSHxKTgbHqWIZU
       imagePullSecrets:
         - name: regcred
-        
