@@ -23,6 +23,10 @@ spec:
           image: ghcr.io/divya-gariga/bc58-fe:latest
           ports:
             - containerPort: 80
+          env: 
+            - name: BASE_URL
+              value: https://mockdata.bc58.tk/
+
       imagePullSecrets:
         - name: regcred
         
