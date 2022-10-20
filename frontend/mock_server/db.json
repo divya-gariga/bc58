@@ -30,17 +30,17 @@
   "slotsBooked": [
     {
       "id": "6306daeb594c21c39684bc46",
-      "slots": [
-
-      ]
+      "slots": []
     }
   ],
   "reports": [
     {
       "id": "6306daeb594c21c39684bc46",
-      "upcomingReports": [
-
-      ]
+      "upcomingReports": []
+    },
+    {
+      "id": "634fa9b479e4a6140a714bee",
+      "upcomingReports": []
     }
   ],
   "labs": [
@@ -61,6 +61,12 @@
       "cost": "$1200",
       "rating": "4.3",
       "slots": 4
+    }
+  ],
+  "users": [
+    {
+      "id": "634fa9b479e4a6140a714bee",
+      "emailid": "sample"
     }
   ]
 }
