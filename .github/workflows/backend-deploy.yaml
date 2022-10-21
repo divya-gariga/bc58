@@ -45,6 +45,7 @@ jobs:
         run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/${{ matrix.image}}
 
   deploy_services:
+    needs: [build_services]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -62,6 +63,7 @@ jobs:
         run: aws eks --region ${{ secrets.AWS_DEFAULT_REGION }} update-kubeconfig --name ${{ secrets.CLUSTER_NAME }}
       - name: create app
         run: |
+          kubectl config set-context --current --namespace=bc58
           kubectl apply -f deploy.yaml
           kubectl apply -f service.yaml
           kubectl apply -f ingress-service-registry.yaml
