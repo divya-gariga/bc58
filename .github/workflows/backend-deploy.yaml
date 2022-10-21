@@ -1,0 +1,44 @@
+name: bootcamp deployment
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_services:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/
+    strategy:
+      matrix:
+        include:
+          - working-directory: api-gateway/
+            image: bc58-api-gateway
+          - working-directory: service-registry/
+            image: bc58-service-registry
+          - working-directory: appointments-service/
+            image: bc58-appointments-service
+          - working-directory: labs-service/
+            image: bc58-labs-service
+          - working-directory: patient-service/
+            image: bc58-patient-service
+          - working-directory: reports-service/
+            image: bc58-reports-service
+          - working-directory: users-service/
+            image: bc58-users-service
+    steps:
+      - name: clone repo
+        uses: actions/checkout@v2
+      - name: docker login to github container registry
+        uses: docker/login-action/@v2
+        with:
+          registry: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
+      - name: build image
+        working-directory: ${{ matrix.working-directory}}
+        run: |
+          mvn clean install
+          docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/${{ matrix.image}}
+      - name: push image
+        run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/${{ matrix.image}}

@@ -45,6 +45,8 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
+      # defaultZone: http://data.bc58.tk/eureka/
+
     instance:
       hostname: localhost
-
+      # hostname: data.bc58.tk
