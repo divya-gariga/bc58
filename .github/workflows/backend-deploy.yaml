@@ -6,9 +6,6 @@ on:
 jobs:
   build_services:
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: backend/
     strategy:
       matrix:
         include:
@@ -26,7 +23,6 @@ jobs:
             image: bc58-reports-service
           - working-directory: backend/users-service/
             image: bc58-users-service
-
     steps:
       - name: clone repo
         uses: actions/checkout@v2
