@@ -43,7 +43,7 @@ jobs:
           npm install -g webpack
           npm run build
         env:
-          BASE_URL: https://mockdata.bc58.tk/
+          BASE_URL: https://data.bc58.tk/
       - name: build frontend
         run: docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-fe:latest
       - name: push frontend
