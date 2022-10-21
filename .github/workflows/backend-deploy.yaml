@@ -6,26 +6,27 @@ on:
 jobs:
   build_services:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend/
+    # defaults:
+    #   run:
+    #     working-directory: backend/
     strategy:
       matrix:
         include:
-          - working-directory: api-gateway/
+          - working-directory: backend/api-gateway/
             image: bc58-api-gateway
-          - working-directory: service-registry/
+          - working-directory: backend/service-registry/
             image: bc58-service-registry
-          - working-directory: appointments-service/
+          - working-directory: backend/appointments-service/
             image: bc58-appointments-service
-          - working-directory: labs-service/
+          - working-directory: backend/labs-service/
             image: bc58-labs-service
-          - working-directory: patient-service/
+          - working-directory: backend/patient-service/
             image: bc58-patient-service
-          - working-directory: reports-service/
+          - working-directory: backend/reports-service/
             image: bc58-reports-service
-          - working-directory: users-service/
+          - working-directory: backend/users-service/
             image: bc58-users-service
+
     steps:
       - name: clone repo
         uses: actions/checkout@v2
