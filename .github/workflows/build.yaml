@@ -22,7 +22,7 @@ jobs:
         run: docker build . -t ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-data:latest
       - name: push mock-server
         run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-data:latest
-  
+
   build_frontend:
     runs-on: ubuntu-latest
     defaults:
@@ -39,9 +39,9 @@ jobs:
           password: ${{ secrets.REGISTRY_TOKEN }}
       - name: install dependencies
         run: |
-              npm install --force
-              npm install -g webpack
-              npm run build
+          npm install --force
+          npm install -g webpack
+          npm run build
         env:
           BASE_URL: https://mockdata.bc58.tk/
       - name: build frontend
@@ -50,7 +50,7 @@ jobs:
         run: docker push ${{ secrets.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc58-fe:latest
 
   deploy:
-    needs: [ build_mock_server,build_frontend]
+    needs: [build_mock_server, build_frontend]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -70,6 +70,3 @@ jobs:
         run: bash deploy.sh
       - name: verify installation
         run: kubectl get all && kubectl get ingress
-      
-
-  
